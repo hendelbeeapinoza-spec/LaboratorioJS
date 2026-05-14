@@ -11,9 +11,9 @@
 ```javascript
 // ==========================================
 // Evaluación en Pareja
-// Estudiante 1: ________
-// Estudiante 2: ________
-// Fecha: ________
+// Estudiante 1: hendelberth espinoza 5to"B"
+// Estudiante 2: franchesca izquierdo 5to"B"
+// Fecha: 14/5/2026
 // 
 // ==========================================
 ```
