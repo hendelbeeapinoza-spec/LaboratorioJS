@@ -45,11 +45,11 @@ const persona = { nombre: "Ada", edad: 25 };
 persona.edad = 26;                 // mutación válida
 
 // Completa para crear una copia con una propiedad adicional, sin alterar el original:
-const actualizado = { ...________, activo: true };
+const actualizado = { persona, activo: true };
 console.log(actualizado); // { nombre: "Ada", edad: 26, activo: true }
 
 // Ahora completa para mostrar la edad del objeto original:
-console.log(________);   // 26
+console.log(persona.edad);   // 26
 ```
 
 ### Ejercicio 3 – Parámetros por defecto y retorno de objeto literal
@@ -57,7 +57,7 @@ console.log(________);   // 26
 // Concepto: Los parámetros pueden tener valores por defecto.
 // Para devolver un objeto desde una función se construye con { ... }.
 const crearLibro = (titulo, autor = "Anónimo", año = new Date().getFullYear()) => {
-    return ________;
+    return { titulo,autor,año };
 };
 
 console.log(crearLibro("El Principito", "Saint-Exupéry", 1943));
@@ -70,7 +70,7 @@ console.log(crearLibro("1984"));
 ### Ejercicio 4 – Rest operator: agrupar en una función variádica
 ```javascript
 // Concepto: ...rest captura argumentos sobrantes en un array real.
-function generarInforme(categoria, ...________) {
+function generarInforme(categoria, items) {
     return `Informe de ${categoria}: ${items.join(" – ")}`;
 }
 console.log(generarInforme("Ventas", "Enero", "Febrero", "Marzo"));
@@ -83,12 +83,12 @@ console.log(generarInforme("Ventas", "Enero", "Febrero", "Marzo"));
 const valores = [10, 20, 30];
 const doble = valores.map(n => n * 2);
 // Usando spread, crea un array con el primer elemento de 'valores', luego los duplicados:
-const mezcla = [valores[0], ...________];
+const mezcla = [valores[0], doble];
 console.log(mezcla); // [10, 20, 40, 60]
 
 // Completa para clonar un objeto y sobrescribir una propiedad:
 const objBase = { x: 1, y: 2 };
-const objMod = { ...objBase, y: ________ };
+const objMod = { objBase, y: 100};
 console.log(objMod); // { x: 1, y: 100 }
 ```
 
@@ -96,16 +96,16 @@ console.log(objMod); // { x: 1, y: 100 }
 ```javascript
 // Concepto: ?.[variable] accede a una posición de array de forma segura; ?.() llama a métodos.
 const estructura = {
-    bloques: [
-        { id: "a", ejecutar: () => "A ejecutado" },
-        null,
-        { id: "c", acciones: ["imprimir"] }
-    ]
+    bloques: [
+        { id: "a", ejecutar: () => "A ejecutado" },
+        null,
+        { id: "c", acciones: ["imprimir"] }
+    ]
 };
 const idx = 0;
-const res0 = estructura.bloques?.[________]?.ejecutar?.();
+const res0 = estructura.bloques?.[idx]?.ejecutar?.();
 console.log(res0); // "A ejecutado"
-const res1 = estructura.bloques?.[1]?.________?.();
+const res1 = estructura.bloques?.[1]?.ejecutar?.();
 console.log(res1); // undefined
 const res2 = estructura.bloques?.[2]?.acciones?.[0];
 console.log(res2); // "imprimir"
@@ -115,15 +115,15 @@ console.log(res2); // "imprimir"
 ```javascript
 // Concepto: Puedes encadenar varios métodos de array. .join() convierte un array en una cadena.
 const productos = [
-    { nombre: "Laptop", precio: 1000, activo: true },
-    { nombre: "Mouse", precio: 20, activo: true },
-    { nombre: "Teclado", precio: 50, activo: true },
-    { nombre: "Monitor", precio: 200, activo: false }
+    { nombre: "Laptop", precio: 1000, activo: true },
+    { nombre: "Mouse", precio: 20, activo: true },
+    { nombre: "Teclado", precio: 50, activo: true },
+    { nombre: "Monitor", precio: 200, activo: false }
 ];
 const lista = productos
-    .____(p => p.activo && p.precio > 30)
-    .____(p => p.nombre)
-    .____(" – ");
+    .filter(p => p.activo && p.precio > 30)
+    .map(p => p.nombre)
+    .join(" – ");
 console.log(lista); // "Laptop – Teclado"
 ```
 
@@ -131,26 +131,26 @@ console.log(lista); // "Laptop – Teclado"
 ```javascript
 // Concepto: Extrae propiedades anidadas, asígnale alias y define un valor por defecto si no existe.
 const pedido = {
-    id: 101,
-    cliente: {
-        nombre: "Carlos",
-        direccion: {
-            ciudad: "Lima"
-        }
-    }
+    id: 101,
+    cliente: {
+        nombre: "Carlos",
+        direccion: {
+            ciudad: "Lima"
+        }
+    }
 };
 const {
-    id,
-    cliente: {
-        nombre: clienteNombre,
-        direccion: { ciudad: ciudadEntrega = "Sin dirección" }
-    }
+    id,
+    cliente: {
+        nombre: clienteNombre,
+        direccion: { ciudad: ciudadEntrega = "Sin dirección" }
+    }
 } = pedido;
 console.log(clienteNombre, ciudadEntrega); // "Carlos" "Lima"
 
 // Completa para que en el siguiente objeto sin dirección se obtenga "Desconocida":
 const pedido2 = { id: 102, cliente: { nombre: "Ana" } };
-const { cliente: { direccion: { ciudad = ________ } = {} } } = pedido2;
+const { cliente: { direccion: { ciudad = "Desconocida" } = {} } } = pedido2;
 console.log(ciudad); // "Desconocida"
 ```
 
@@ -158,14 +158,14 @@ console.log(ciudad); // "Desconocida"
 ```javascript
 // Concepto: ?. para acceso seguro, ?? para dar un valor solo si es null/undefined.
 const config = {
-    servidor: {
-        cache: {
-            ttl: 0   // 0 es válido
-        }
-    }
+    servidor: {
+        cache: {
+            ttl: 0   // 0 es válido
+        }
+    }
 };
-const ttlFinal = config?.servidor?.cache?.ttl ________ 3600; // 0 (el 0 se respeta)
-const timeout = config?.servidor?.timeout ?? 5000;        // 5000 (no existe)
+const ttlFinal = config?.servidor?.cache?.ttl ?? 3600; // 0 (el 0 se respeta)
+const timeout = config?.servidor?.timeout ?? 5000;        // 5000 (no existe)
 console.log(ttlFinal, timeout); // 0 5000
 ```
 
