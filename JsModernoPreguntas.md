@@ -20,7 +20,7 @@
 
 ---
 
-### Ejercicio 1 – Ámbito y declaración: `let` vs `const`
+### Ejercicio 1 – Ámbito y declaración: `let` vs `const`S
 ```javascript
 // Concepto: let y const respetan el bloque; const impide reasignación, let la permite.
 // Completa con let o const según corresponda para obtener la salida indicada.
